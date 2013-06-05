@@ -292,7 +292,7 @@
       $flippingBackElem.addClass('holizontalFlipping');
 
       if (flippingSide === _FIRST_HALF) {
-       $flipShadow.css('left', '0px');
+        $flipShadow.css('left', '0px');
       }
     }
 
@@ -307,7 +307,7 @@
     $cur.removeClass(CURRENT);
     $cur.addClass('working');
 
-    //$flipShadow.show();
+    $flipShadow.show();
   }
 
   Flip.prototype.step = function(ratio) {
@@ -335,7 +335,7 @@
 
     var $elem = $(this.element);
     var elemHeight = $flipping.height();
-    //var flipShadowRatio = 0;
+    var flipShadowRatio = 0;
 
     var degree = Math.abs(180 * ratio);
     if (degree > 90) {
@@ -350,22 +350,22 @@
       // move flipShadow position (right-to-left or left-to-right)
       if (this._isVertical()) {
         if (this.flippingSide === _SECOND_HALF) {
-          //$('.flipShadow').css('top', '0');
+          $('.flipShadow').css('top', '0');
         } else {
-          //$('.flipShadow').css('top', elemHeight + 'px');
+          $('.flipShadow').css('top', elemHeight + 'px');
         }
       } else {
         if (this.flippingSide === _SECOND_HALF) {
-          //$('.flipShadow').css('left', '0');
+          $('.flipShadow').css('left', '0');
         } else {
-          //$('.flipShadow').css('left', '50%');
+          $('.flipShadow').css('left', '50%');
         }
       }
 
 
       // set new flipShadow
-      //flipShadowRatio = Math.max(0, 1 - formula((180 - degree) / 90));
-      //$('.flipShadow').css('opacity', 0.9 * flipShadowRatio);
+      flipShadowRatio = Math.max(0, 1 - formula((180 - degree) / 90));
+      $('.flipShadow').css('opacity', 0.9 * flipShadowRatio);
 
     } else {
       $flipping.css('zIndex', FLIPPING_BASE_ZINDEX+1);
@@ -380,20 +380,20 @@
         if (this.flippingSide === _SECOND_HALF) {
           // vertical flipshadow must calculate height based on the
           // flipping object because pager area affect height=50%
-          //$('.flipShadow').css('top', elemHeight + 'px');
+          $('.flipShadow').css('top', elemHeight + 'px');
         } else {
-          //$('.flipShadow').css('top', '0');
+          $('.flipShadow').css('top', '0');
         }
       } else {
         if (this.flippingSide === _SECOND_HALF) {
-          //$('.flipShadow').css('left', '50%');
+          $('.flipShadow').css('left', '50%');
         } else {
-          //$('.flipShadow').css('left', '0');
+          $('.flipShadow').css('left', '0');
         }
       }
 
-      //flipShadowRatio = Math.max(0, 1 - formula((degree) / 90));
-      //$('.flipShadow').css('opacity', 0.9 * flipShadowRatio);
+      flipShadowRatio = Math.max(0, 1 - formula((degree) / 90));
+      $('.flipShadow').css('opacity', 0.9 * flipShadowRatio);
     }
   }
 
@@ -454,12 +454,6 @@
 
   // This can be done by complete css animation. That should be faster.
   Flip.prototype.action = function(to) {
-    //console.log("FLIP OUT");
-
-    // modificaci�n realizada por chris //
-    // PARAMETRO PARA CAMBIAR LA VELOCIDAD DEL EASING //
-    var stepSize = 0.02;
-
     var endRatio = to;
     var startRatio = this.currentRatio;
 
@@ -498,7 +492,7 @@
 
     var loop = function() {
       // to next step
-      x = Math.min(1, x + stepSize);
+      x = Math.min(1, x + 0.05);
       var y = Math.min(1.0, formula(x));
       if (endRatio === 0) {
         // set next ratio to the reverse direction
@@ -511,8 +505,6 @@
       }
 
       _this.step(y);
-
-      //console.log("anima "+x);
 
       // call until ratio is 1
       if (x + 0.05 < d) {
@@ -536,7 +528,7 @@
     var $current = $elem.children('.working');
 
     // clear flip elem
-    //$('.flipShadow').replaceWith('');
+    $('.flipShadow').replaceWith('');
     $('.firstHalf').replaceWith('');
     $('.secondHalf').replaceWith('');
 
@@ -839,7 +831,7 @@
     // clear flip elem
     $('.sliding').replaceWith('');
     $('.slidingBg').replaceWith('');
-    //$('.slideShadow').replaceWith('');
+    $('.slideShadow').replaceWith('');
 
     var slideSide = this.slideSide;
     var $nextCurrent = $current;
@@ -1027,19 +1019,6 @@
     if (this.effect.isInAnimation) {
       return false;
     }
-	
-//	custom //
-//	
-//	var container = document.getElementById("blog1-page1");
-//	var contained = event.target;
-//	var contenido = $.contains( container , contained );
-//	var identico = container == contained;
-//	//console.log(contenido + " - " + identico);
-//	
-//	if (contenido || identico) {
-//		//return false;
-//	} 
-//	custom //
 
     var mousePos = this._getClientMousePos(event);
     var now = new Date().getTime();
@@ -1160,6 +1139,7 @@
       }
     // } else {
       // TODO: implement some animation to indicate the first page
+      console.log("anterior");
     }
   }
 
@@ -1185,6 +1165,7 @@
       }
     //} else {
       // TODO: implement some animation to indicate the last page
+      console.log("next");
     }
   }
 
@@ -1235,6 +1216,7 @@
       this._clickContext.lastInfo = null;
       this._clickContext.dList = [];
       this._clickContext.aList = [];
+
       return true;
     }
 
@@ -1274,7 +1256,7 @@
     }
 
     // run animation
-    this.effect.action(targetRatio);//aca larga la animación de salida
+    this.effect.action(targetRatio);
 
     event.preventDefault();
 
@@ -1314,7 +1296,6 @@
   }
 
   Plugin.prototype.pagerTap = function(event) {
-	  
     // check position
     var $elem = $(this.element);
 
@@ -1326,11 +1307,9 @@
     if (mouse.x < pagerWidth / 2) {
       // backward
       this.flipPrev();
-			console.log("atras");
     } else {
       // forward
       this.flipNext();
-			console.log("adelante");			
     }
   }
 
@@ -1430,24 +1409,16 @@
       });
 
     }
-   
-   
 
     $(this.element).bind(mousedown, function(event) {
-	     //console.log("buscando event 4");
-             //currentPage();
       return _this.vmousedown(event);
     });
 
     $(this.element).bind(mousemove, function(event) {
-	     //console.log("buscando event 5");
-             //currentPage();
       return _this.vmousemove(event);
     });
 
     $(this.element).bind(mouseup, function(event) {
-	     //console.log("buscando event 6");
-             //currentPage();
       return _this.vmouseup(event);
     });
 
