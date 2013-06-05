@@ -1139,6 +1139,7 @@
       }
     // } else {
       // TODO: implement some animation to indicate the first page
+      console.log("anterior");
     }
   }
 
@@ -1164,6 +1165,7 @@
       }
     //} else {
       // TODO: implement some animation to indicate the last page
+      console.log("next");
     }
   }
 
