@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 $(document).on("mobileinit", function(){
-    alert("INICIA MOBILE");
+    //CONFIGS
+    $.mobile.allowCrossDomainPages = true;
+    
 });
 
-$(document).ready(function () {
-   alert("INICIA");
-   
-});
+
+
